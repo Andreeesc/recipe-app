@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Recipe } from './components/Recipe/Recipe';
 
-import { ContainerGrid } from './global.styles'
+import { ContainerApp, ContainerGrid } from './global.styles'
 
 
 function App() {
@@ -17,30 +17,34 @@ function App() {
   const getRecipes = async () =>{
     const response = await fetch(`https://api.edamam.com/search?q=chicken&app_id=${APP_ID}&app_key=${APP_KEY}`)
     const data = await response.json()
-    console.log(data.hits[0].recipe.ingredientLines)
     setRecipes(data.hits)
   }
 
   return (
-    <div className="App">
-      <form className="search-form">
-        <input className="search-bar" type="text"/>
-        <button className="search-button" type="submit">Search</button>
-      </form>
 
-      <ContainerGrid>
-        {recipes.map(({recipe: {label, calories, image, ingredientLines}}) => (
-          <Recipe 
-            key={label}
-            title={label}
-            calories={calories}
-            image={image}
-            ingredientLines={ingredientLines}
-          />
-        ))}
-      </ContainerGrid>
+    <ContainerApp>
+      <div className="App">
 
-    </div>
+        <form className="search-form">
+          <input className="search-bar" type="text"/>
+          <button className="search-button" type="submit">Search</button>
+        </form>
+
+        <ContainerGrid>
+          {recipes.map(({recipe: {label, calories, image, ingredientLines}}) => (
+            <Recipe 
+              key={label}
+              title={label}
+              calories={calories}
+              image={image}
+              ingredientLines={ingredientLines}
+            />
+          ))}
+        </ContainerGrid>
+
+      </div>
+    </ContainerApp>
+    
   );
 }
 
